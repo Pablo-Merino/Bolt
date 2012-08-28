@@ -1,0 +1,13 @@
+%p#notice= notice
+
+%p
+	%b Text:
+	= @status.text
+
+%p
+	%b Owner:
+	= @status.user.screen_name
+
+= link_to 'Edit', edit_status_path(@status)
+\|
+= link_to 'Back', statuses_path

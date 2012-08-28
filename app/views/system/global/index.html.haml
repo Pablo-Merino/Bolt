@@ -1,0 +1,6 @@
+
+- @statuses.each do |status|
+	- if status.is_a? Event
+		= render :partial => 'statuses/event', :locals => {:event => status}
+	- else
+		= render :partial => 'statuses/status', :locals => {:status => status}

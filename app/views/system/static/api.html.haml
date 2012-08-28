@@ -1,0 +1,524 @@
+.page-header
+	%h1 
+		API
+		%small Basic API details (read-only ATM)
+
+%p.about_text Bolt has a basic read-only API (which will be expanded soon) to interact with the service from 3rd party apps.
+
+:markdown
+	All the endpoints require authentication. The `/auth_token` endpoint requires special authentication though. It'll be explained in it's point.
+
+	### Endpoints
+
+	`GET /`: Does nothing, no action specified. Error 100.
+	#### Parameters
+
+	- auth_token (Required): account authentication token.
+
+	#### Example:
+
+		GET /api/v1?auth_token=aaa111bbb222
+		
+		{
+		    "error": true,
+		    "code": 100,
+		    "message": "No action defined"
+		}
+		
+	---
+
+	`POST /auth_token`: Outputs the auth token needed for interactions
+	#### Parameters
+
+	- user (Required): account screen name.
+	- pass (Required): account password.
+
+	#### Example:
+
+		POST /api/v1/auth_token?user=user&pass=password
+
+		{
+	    	"error": false,
+	    	"code": 201,
+	    	"token": "auth_token_here"
+		}
+		
+	---
+
+	`GET /own/statuses`: Shows your statuses
+	#### Parameters
+
+	- auth_token (Required): account authentication token.
+
+	#### Example:
+
+		GET /api/v1/own/status?auth_token=aaa111bbb222
+
+		{
+	    	"error": false,
+	    	"code": 202,
+	    	"value": [
+	        	{
+	            	"_id": "5023a253e47512f030000008",
+	            	"created_at": "2012-08-09T11:43:15Z",
+	            	"mention_ids": [
+	                	"501d6035e475125f46000001"
+	            	],
+	            	"reply_id": "50239ea9e47512704a000001",
+	            	"text": "@pablo Hello!",
+	            	"updated_at": "2012-08-09T11:43:15Z",
+	            	"user_id": "501d6035e475125f46000001"
+	        	},
+	        	{
+	            	"_id": "50239ea9e47512704a000001",
+	            	"created_at": "2012-08-09T11:27:37Z",
+	            	"mention_ids": [],
+	            	"reply_id": null,
+	            	"text": "Hello everyone!",
+	            	"updated_at": "2012-08-09T11:27:37Z",
+	            	"user_id": "501d6035e475125f46000001"
+	        	}
+	    	]
+		}
+		
+	---
+
+	`GET /own/user`: Shows your user info
+	#### Parameters
+
+	- auth_token (Required): account authentication token.
+
+	#### Example:
+
+		GET /api/v1/own/user?auth_token=aaa111bbb222
+
+		{
+		   "error": false,
+		   "code": 203,
+		   "value": {
+		       "_id": "501d6035e475125f46000001",
+		       "authentication_token": "aaa111bbb222",
+		       "biography": "Test. http://google.es",
+		       "email": "my_mail@bolt.dev",
+		       "event_ids": [
+		           "50238400e47512f030000001",
+		           "5023841ae47512f030000002",
+		           "50238477e47512f030000003",
+		           "50238505e47512f030000005",
+		           "50238efee47512f030000006",
+		           "5023905be47512f030000007"
+		       ],
+		       "favorite_ids": [
+		           "50228a40e47512850d00001e"
+		       ],
+		       "follower_ids": [
+		           "501d66cce475123050000001"
+		       ],
+		       "following_ids": [
+		           "501d66cce475123050000001",
+		           "5020d05be47512621c000003"
+		       ],
+		       "mentioned_status_ids": [
+		           "501e7c85e475122338000005",
+		           "5022b93ee47512652f000001",
+		           "5022b93ee47512652f000001",
+		           "5023a253e47512f030000008",
+		           "5023a253e47512f030000008"
+		       ],
+		       "mentioned_tweet_ids": [
+		           "501e7a4de475122338000002",
+		           "501e7a5ce475122338000003",
+		           "501e7a63e475122338000004"
+		       ],
+		       "name": "Pablo Merino",
+		       "screen_name": "pablo",
+		       "sign_in_count": 7
+		   }
+		}
+		
+	---
+
+	`GET /own/followers`: Shows your followers
+	#### Parameters
+
+	- auth_token (Required): account authentication token.
+
+	#### Example:
+
+		GET /api/v1/own/followers?auth_token=aaa111bbb222
+
+		{
+		    "error": false,
+		    "code": 204,
+		    "value": [
+		        {
+		            "_id": "501d66cce475123050000001",
+		            "biography": "YAY I'M COOL. YAY I'M COOL. ",
+		            "email": "another_mail@bolt.dev",
+		            "event_ids": [
+		                "50217f9de47512234d000004"
+		            ],
+		            "favorite_ids": [
+		                "501e4970e47512a10b000003",
+		                "501e51c8e47512f716000002",
+		                "501ec07ee475127260000001"
+		            ],
+		            "follower_ids": [
+		                "501d6035e475125f46000001"
+		            ],
+		            "following_ids": [
+		                "501d6035e475125f46000001",
+		                "5020d05be47512621c000003"
+		            ],
+		            "mentioned_status_ids": [
+		                "501e7c85e475122338000005",
+		                "501e7ec7e475122338000006",
+		                "501ea7ace47512163f000001",
+		                "501ea7b4e47512163f000002",
+		                "501eab75e475125252000001",
+		                "50228a40e47512850d00001e",
+		                "50228a40e47512850d00001e",
+		                "50228b6ee47512850d00001f",
+		                "50228b6ee47512850d00001f",
+		                "5022b93ee47512652f000001",
+		                "5022b93ee47512652f000001"
+		            ],
+		            "name": "Pablo Pruebas",
+		            "screen_name": "pablo1",
+		            "sign_in_count": 11
+		        }
+		    ]
+		}
+		
+	---
+
+	`GET /own/following`: Shows the users you're following
+	#### Parameters
+
+	- auth_token (Required): account authentication token.
+
+	#### Example:
+
+		GET /api/v1/own/following?auth_token=aaa111bbb222
+
+		{
+		    "error": false,
+		    "code": 205,
+		    "value": [
+		        {
+		            "_id": "501d66cce475123050000001",
+		            "biography": "YAY I'M COOL. YAY I'M COOL. ",
+		            "email": "another_mail@bolt.dev",
+		            "event_ids": [
+		                "50217f9de47512234d000004"
+		            ],
+		            "favorite_ids": [
+		                "501e4970e47512a10b000003",
+		                "501e51c8e47512f716000002",
+		                "501ec07ee475127260000001"
+		            ],
+		            "follower_ids": [
+		                "501d6035e475125f46000001"
+		            ],
+		            "following_ids": [
+		                "501d6035e475125f46000001",
+		                "5020d05be47512621c000003"
+		            ],
+		            "mentioned_status_ids": [
+		                "501e7c85e475122338000005",
+		                "501e7ec7e475122338000006",
+		                "501ea7ace47512163f000001",
+		                "501ea7b4e47512163f000002",
+		                "501eab75e475125252000001",
+		                "50228a40e47512850d00001e",
+		                "50228a40e47512850d00001e",
+		                "50228b6ee47512850d00001f",
+		                "50228b6ee47512850d00001f",
+		                "5022b93ee47512652f000001",
+		                "5022b93ee47512652f000001"
+		            ],
+		            "name": "Pablo Pruebas",
+		            "screen_name": "pablo1",
+		            "sign_in_count": 11
+		        },
+		        {
+		            "_id": "5020d05be47512621c000003",
+		            "biography": "",
+		            "email": "third_mail@bolt.dev",
+		            "event_ids": [
+		                "50217f9de47512234d000004",
+		                "50238efee47512f030000006",
+		                "5023905be47512f030000007"
+		            ],
+		            "favorite_ids": [],
+		            "follower_ids": [
+		                "501d66cce475123050000001",
+		                "501d66cce475123050000001",
+		                "501d66cce475123050000001",
+		                "501d66cce475123050000001",
+		                "501d6035e475125f46000001"
+		            ],
+		            "following_ids": [],
+		            "mentioned_status_ids": [
+		                "5022b93ee47512652f000001",
+		                "5022b93ee47512652f000001"
+		            ],
+		            "name": "Test User",
+		            "screen_name": "test_user",
+		            "sign_in_count": 1
+		        }
+		    ]
+		}
+		
+	---
+
+	`GET /own/timeline`: Shows your timeline
+	#### Parameters
+
+	- auth_token (Required): account authentication token.
+
+	#### Example:
+
+		GET /api/v1/own/timeline?auth_token=aaa111bbb222
+
+		{
+		    "error": false,
+		    "code": 206,
+		    "value": [
+		        {
+		            "_id": "5023a253e47512f030000008",
+		            "created_at": "2012-08-09T11:43:15Z",
+		            "mention_ids": [
+		                "501d6035e475125f46000001"
+		            ],
+		            "reply_id": "50239ea9e47512704a000001",
+		            "text": "@pablo Hello!",
+		            "updated_at": "2012-08-09T11:43:15Z",
+		            "user_id": "501d6035e475125f46000001"
+		        },
+		        {
+		            "_id": "50239ea9e47512704a000001",
+		            "created_at": "2012-08-09T11:27:37Z",
+		            "mention_ids": [],
+		            "reply_id": null,
+		            "text": "Hello everyone!",
+		            "updated_at": "2012-08-09T11:27:37Z",
+		            "user_id": "501d6035e475125f46000001"
+		        },
+		        {
+		            "_id": "5022bc10e47512652f000002",
+		            "created_at": "2012-08-08T19:20:48Z",
+		            "mention_ids": [],
+		            "reply_id": null,
+		            "text": "yay!",
+		            "updated_at": "2012-08-08T19:20:48Z",
+		            "user_id": "501d6035e475125f46000001"
+		        },
+		        {
+		            "_id": "5022b93ee47512652f000001",
+		            "created_at": "2012-08-08T19:08:46Z",
+		            "mention_ids": [
+		                "501d6035e475125f46000001",
+		                "501d66cce475123050000001",
+		                "5020d05be47512621c000003"
+		            ],
+		            "reply_id": null,
+		            "text": "@pablo @pablo1 @test_user hello",
+		            "updated_at": "2012-08-08T19:08:46Z",
+		            "user_id": "501d6035e475125f46000001"
+		        },
+		        {
+		            "_id": "50228b6ee47512850d00001f",
+		            "created_at": "2012-08-08T15:53:18Z",
+		            "mention_ids": [
+		                "501d66cce475123050000001"
+		            ],
+		            "reply_id": "50228a40e47512850d00001e",
+		            "text": "@pablo1 dsdsdsdsds",
+		            "updated_at": "2012-08-08T15:53:18Z",
+		            "user_id": "501d66cce475123050000001"
+		        },
+		        {
+		            "_id": "50228a40e47512850d00001e",
+		            "created_at": "2012-08-08T15:48:16Z",
+		            "mention_ids": [
+		                "501d66cce475123050000001"
+		            ],
+		            "reply_id": "50228a3be47512850d00001d",
+		            "text": "@pablo1 Hola :D",
+		            "updated_at": "2012-08-08T15:48:16Z",
+		            "user_id": "501d66cce475123050000001"
+		        },
+		        {
+		            "_id": "50228a3be47512850d00001d",
+		            "created_at": "2012-08-08T15:48:11Z",
+		            "mention_ids": [],
+		            "reply_id": null,
+		            "text": "Hola!",
+		            "updated_at": "2012-08-08T15:48:11Z",
+		            "user_id": "501d66cce475123050000001"
+		        }
+		    ]
+		}
+		
+	---
+
+	`GET /status/:id`: Shows a specified status
+	#### Parameters
+
+	- auth_token (Required): account authentication token.
+	- id (Required): The status ID
+
+	#### Example:
+
+		GET /api/v1/status/5023a253e47512f030000008?auth_token=aaa111bbb222
+
+		{
+		    "error": false,
+		    "code": 210,
+		    "value": {
+		        "_id": "5023a253e47512f030000008",
+		        "created_at": "2012-08-09T11:43:15Z",
+		        "mention_ids": [
+		            "501d6035e475125f46000001"
+		        ],
+		        "reply_id": "50239ea9e47512704a000001",
+		        "text": "@pablo Hello!",
+		        "updated_at": "2012-08-09T11:43:15Z",
+		        "user_id": "501d6035e475125f46000001"
+		    }
+		}
+	---
+
+	`GET /user/:id`: Shows a specified user
+	#### Parameters
+
+	- auth_token (Required): account authentication token.
+	- id (Required): The user ID
+
+	#### Example:
+
+		GET /api/v1/user/501d6035e475125f46000001?auth_token=aaa111bbb222
+
+		{
+		    "error": false,
+		    "code": 211,
+		    "value": {
+		        "_id": "501d6035e475125f46000001",
+		        "biography": "Test. http://google.es",
+		        "email": "some_mail@bolt.dev",
+		        "event_ids": [
+		            "50238400e47512f030000001",
+		            "5023841ae47512f030000002",
+		            "50238477e47512f030000003",
+		            "50238505e47512f030000005",
+		            "50238efee47512f030000006",
+		            "5023905be47512f030000007"
+		        ],
+		        "favorite_ids": [
+		            "50228a40e47512850d00001e"
+		        ],
+		        "follower_ids": [
+		            "501d66cce475123050000001"
+		        ],
+		        "following_ids": [
+		            "501d66cce475123050000001",
+		            "5020d05be47512621c000003"
+		        ],
+		        "mentioned_status_ids": [
+		            "501e7c85e475122338000005",
+		            "5022b93ee47512652f000001",
+		            "5022b93ee47512652f000001",
+		            "5023a253e47512f030000008",
+		            "5023a253e47512f030000008"
+		        ],
+		        "mentioned_tweet_ids": [
+		            "501e7a4de475122338000002",
+		            "501e7a5ce475122338000003",
+		            "501e7a63e475122338000004"
+		        ],
+		        "name": "Pablo Merino",
+		        "screen_name": "pablo",
+		        "sign_in_count": 7
+		    }
+		}
+	---
+
+	`GET /event/:id`: Shows a specified event
+	#### Parameters
+
+	- auth_token (Required): account authentication token.
+	- id (Required): The event ID
+
+	#### Example:
+
+		GET /api/v1/event/50238477e47512f030000003?auth_token=aaa111bbb222
+
+		{
+		    "error": false,
+		    "code": 212,
+		    "value": {
+		        "_id": "50238477e47512f030000003",
+		        "created_at": "2012-08-09T09:35:51Z",
+		        "name": "@pablo_test_1 is now @pablo_test_2!",
+		        "type": "new_nick",
+		        "updated_at": "2012-08-09T09:35:51Z",
+		        "user_ids": [
+		            "501d6035e475125f46000001"
+		        ]
+		    }
+		}
+	---
+
+	`GET /global`: Shows the global timeline
+	#### Parameters
+
+	- auth_token (Required): account authentication token.
+	- limit (Optional): The limit of statuses & events retrieved
+
+
+	#### Example:
+
+		GET /api/v1/global?auth_token=aaa111bbb222&limit=1
+
+		{
+		    "error": false,
+		    "code": 220,
+		    "value": [
+		        {
+		            "_id": "5023a253e47512f030000008",
+		            "created_at": "2012-08-09T11:43:15Z",
+		            "mention_ids": [
+		                "501d6035e475125f46000001"
+		            ],
+		            "reply_id": "50239ea9e47512704a000001",
+		            "text": "@pablo Hello!",
+		            "updated_at": "2012-08-09T11:43:15Z",
+		            "user_id": "501d6035e475125f46000001"
+		        },
+		        {
+		            "_id": "50217f9de47512234d000004",
+		            "created_at": "2012-08-07T20:50:37Z",
+		            "name": "Test User started following Pablo Pruebas!",
+		            "type": "follow",
+		            "updated_at": "2012-08-07T20:50:37Z",
+		            "user_ids": [
+		                "501d66cce475123050000001",
+		                "5020d05be47512621c000003"
+		            ]
+		        }
+		    ]
+		}
+
+	### Errors
+
+	#### Auth error
+
+	Next error will be shown if authentication fails, with a HTTP status code of `403`
+
+		{
+		    "error": true,
+		    "code": 101,
+		    "message": "Wrong auth details"
+		}
+

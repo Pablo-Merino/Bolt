@@ -1,0 +1,18 @@
+.sessions_box
+
+	%h2 Sign up
+	= form_for(resource, :as => resource_name, :url => registration_path(resource_name),:html => {:class=>"well"}) do |f|
+		= devise_error_messages!
+		= f.text_field :screen_name, :class=>"span3", :placeholder=>"Screen name", :class => 'text_field'
+		%br/
+		= f.text_field :name, :class=>"span3", :placeholder=>"Name", :class => 'text_field'
+		%br/
+		= f.email_field :email, :class=>"span3", :placeholder=>"E-mail", :class => 'text_field'
+		%br/
+		= f.password_field :password, :class=>"span3", :placeholder=>"Password", :class => 'text_field'
+		%br/
+		= f.password_field :password_confirmation, :class=>"span3", :placeholder=>"Password confirmation", :class => 'text_field'
+		%br/
+		.controls
+			= f.submit "Sign up", :class=>"btn btn-primary"
+			= link_to 'Sign in', new_session_path(resource_name), :class=>"btn"

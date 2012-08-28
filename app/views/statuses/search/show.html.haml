@@ -1,0 +1,5 @@
+- if @statuses.empty?
+	%h3 No results found
+- else
+	- @statuses.each do |status|
+		= render :partial => 'statuses/status', :locals => {:status => status}

@@ -1,0 +1,5 @@
+- if @statuses.empty?
+	%h1{:style=>"text-align:center"}= "You have no mentions! Wait until they arrive :)"
+- else
+	- @statuses.each do |status|
+		= render :partial => 'statuses/status', :locals => {:status => status}

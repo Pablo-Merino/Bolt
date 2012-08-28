@@ -1,0 +1,61 @@
+%div{:class=>"well #{'own_status' if status.is_mine? current_user}"}
+	.left
+		= image_tag avatar_url(status.user.email), :class=>'status_user_avatar'
+
+	.status_content
+		%h4{:style=>'display:inline'}= link_to "#{status.user.name}", user_profile_path(status.user.screen_name)
+		%small="@#{status.user.screen_name}"
+		%p= status.html.html_safe
+		%span.label= "#{time_ago_in_words(status.created_at)} ago"
+
+		
+		%div.operations
+			- if current_user.faved? status
+				= form_for status, :url => unfavorite_status_path(status), :method => :delete do |f|
+					= f.button '<i class="icon-star-empty"></i>'.html_safe, :confirm => "Are you sure you want to unfavorite this status?", :class=>"btn btn-danger btn-mini"
+				.spacer
+			- else
+				= form_for status, :url => favorite_status_path(status), :method => :put do |f|
+					= f.button '<i class="icon-star"></i>'.html_safe, :class=>"btn btn-success btn-mini"
+				.spacer
+			= link_to '<i class="icon-comment"></i>'.html_safe, show_status_path(status), :class=>"btn btn-success btn-mini" unless "#{controller_name}##{action_name}" == 'operations#show'
+			.spacer
+			- if status.is_mine? current_user
+				= form_for status, :url => destroy_status_path(status), :method => :delete do |f|
+					= f.button '<i class="icon-trash"></i>'.html_safe, :confirm => "Are you sure you want to destroy this status?", :class=>"btn btn-danger btn-mini"
+				.spacer
+			=link_to '<i class="icon-plus"></i>'.html_safe, '#', :class=>"show_reply_btn btn btn-success btn-mini", :"data-status_id"=>status.id unless status.reply.nil? 
+			.spacer
+		%div{:style=>'margin-top:20px'}
+		- unless status.reply.nil?
+			%div{:class=>"reply #{status.id}", :"data-status_id"=>status.id}
+				%h3 In reply to:
+				%div{:class=>"well #{'own_status' if status.is_mine? current_user}"}
+					.left_reply
+						= image_tag avatar_url(status.reply.user.email), :class=>'status_reply_user_avatar'
+
+					.status_reply_content
+						%p= link_to "#{status.reply.user.name} (@#{status.reply.user.screen_name})", user_profile_path(status.reply.user.screen_name)
+						%p= auto_link(sanitize(status.reply.text))
+						%span.label= "#{time_ago_in_words(status.created_at)} ago"
+						.separator
+						- unless status.reply.mentions.empty?
+							%h4 Mentions
+							%ul.mentions
+							- status.reply.mentions.each do |user|
+								%li= link_to "#{user.name} (@#{user.screen_name})", user_profile_path(user.screen_name)
+
+						%div.operations
+							- if current_user.faved? status
+								= form_for status, :url => unfavorite_status_path(status), :method => :delete do |f|
+									= f.button '<i class="icon-star-empty"></i>'.html_safe, :confirm => "Are you sure you want to unfavorite this status?", :class=>"btn btn-danger btn-mini"
+
+							- else
+								= form_for status, :url => favorite_status_path(status), :method => :put do |f|
+									= f.button '<i class="icon-star"></i>'.html_safe, :class=>"btn btn-success btn-mini"
+							= link_to '<i class="icon-comment"></i>'.html_safe, show_status_path(status), :class=>"btn btn-success btn-mini" unless "#{controller_name}##{action_name}" == 'operations#show'
+
+							- if status.is_mine? current_user
+								= form_for status, :url => destroy_status_path(status), :method => :delete do |f|
+									= f.button '<i class="icon-trash"></i>'.html_safe, :confirm => "Are you sure you want to destroy this status?", :class=>"btn btn-danger btn-mini"
+

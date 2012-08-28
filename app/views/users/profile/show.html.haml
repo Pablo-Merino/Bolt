@@ -1,0 +1,109 @@
+.profile
+	- if @user
+		
+		.user_info
+		
+			.page-header
+				= image_tag avatar_url(@user.email), :class=>'user_avatar'
+				%h1 
+					="#{@user.name}"
+					%small= "@#{@user.screen_name}"
+			- if current_user != @user
+				- if current_user.follows? @user
+					= form_for @user, :url => unfollow_path(@user.screen_name), :method => :delete do |f|
+						= f.submit 'Unfollow', :class=>"btn btn-danger"
+				- else
+					= form_for @user, :url => follow_path(@user.screen_name), :method => :put do |f|
+						= f.submit 'Follow', :class=>"btn btn-success"				
+			- else
+				%div{:style=>"margin:64px"}
+
+			.tabbable
+				.visible-phone
+					%div{:style=>"margin:20px"}
+				%ul{:class=>"nav nav-tabs"}
+					%li.active
+						%a{:href=>"#favorites", :'data-toggle' => 'tab'}= "Favorites"
+					%li{:class=>'nav_link'}
+						%a{:href=>"#statuses", :'data-toggle' => 'tab'}= "Statuses"
+					%li{:class=>'nav_link'}
+						%a{:href=>"#user_info", :'data-toggle' => 'tab'}= "User Info"
+					%li{:class=>'followers_tab_menu'}
+						%a{:href=>"#followers", :'data-toggle' => 'tab'}= "Followers"
+					%li{:class=>'following_tab_menu'}
+						%a{:href=>"#following", :'data-toggle' => 'tab'}= "Following"
+					- if @user == current_user
+						%li{:class=>'nav_link'}
+							%a{:href=>"#api_info", :'data-toggle' => 'tab'}= "API Access"
+				%div.tab-content
+					%div{:class=>"tab-pane active", :id=>"favorites"}
+						%h1 Favorites
+						.separator
+						- if !@user.favorites.empty?
+							- @user.favorites.each do |status|
+								= render :partial => 'statuses/status', :locals => {:status => status}
+						- else
+							%h3 This user has no favorites!
+					%div{:class=>"tab-pane", :id=>"statuses"}
+						%h1 Statuses
+						.separator	
+						- if !@user.statuses.empty?
+							- @user.statuses.each do |status|
+								= render :partial => 'statuses/status', :locals => {:status => status}					
+						- else
+							%h3 This user has no statuses!
+					%div{:class => 'tab-pane', :id => 'user_info'}
+						%h1 User Info
+						.separator
+						.row-fluid
+							.span2
+								%a{:href=>"#followers",:class => 'btn btn-large follower_button', "data-toggle" => 'tab'}= "Followers: #{@user.followers.count}"
+								.separator
+								%a{:href=>"#following",:class => 'btn btn-large following_button', "data-toggle" => 'tab'}= "Following: #{@user.following.count}"
+
+							.span10
+								%h4 Biography
+								- if @user.biography.empty?
+									%p (This user has no biography)
+								- else
+									%p= auto_link(@user.biography)
+								%hr/
+								- if current_user == @user
+									%b 
+										For setting your avatar, just sign up in
+										= link_to 'Gravatar', 'http://gravatar.com', :target => '_blank'
+										and upload it. It'll be automatically updated here.
+					%div{:class => 'tab-pane', :id => 'followers'}
+						%h1 Followers
+						.separator
+						- if @user.followers.empty?
+							%h3 This user has no followers
+						- else
+							- @user.followers.each do |user|
+								= render :partial => 'users/small_user', :locals => {:user => user}
+
+					%div{:class => 'tab-pane', :id => 'following'}
+						%h1 Following
+						.separator
+						- if @user.following.empty?
+							%h3 This user doesn't follows anyone
+						- else
+							- @user.following.each do |user|
+								= render :partial => 'users/small_user', :locals => {:user => user}
+					- if @user == current_user
+						%div{:class => 'tab-pane', :id => 'api_info'}
+							%h1 API Access
+							.separator
+
+							.row-fluid
+								.span2
+									%h2 Auth Token
+									%span.label= @user.authentication_token
+
+								.span10
+																
+									%h3 WARNING! This token grants access to your entire user & operations. Don't share it!
+
+									= link_to 'API Docs', api_docs_path, :class => 'btn btn-large'
+	- else
+		%h1{:style=>'text-align:center'} User not found

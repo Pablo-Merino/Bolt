@@ -1,0 +1,22 @@
+.well
+	= image_tag avatar_url(user.email), :class=>'mini_avatar'
+
+	%h4{:style=>'display:inline'}= link_to "#{user.name}", user_profile_path(user.screen_name)
+	%small="@#{user.screen_name}"
+	%br
+	- if user.biography.empty?
+		%i= "(this user has no biography)"
+	- else
+		%i= auto_link(user.biography)
+	.user_operations
+		- if current_user != user
+			- if current_user.follows? user
+				= form_for user, :url => unfollow_path(user.screen_name), :method => :delete do |f|
+					= f.submit 'Unfollow', :class=>"btn btn-danger btn-mini", :confirm => 'Are you sure?'
+			- else
+				= form_for user, :url => follow_path(user.screen_name), :method => :put do |f|
+					= f.submit 'Follow', :class=>"btn btn-success btn-mini"
+		- else
+			= submit_tag 'This is you', :class=>"btn btn-mini disabled"
+
+

@@ -1,0 +1,74 @@
+!!!
+%html
+	%head
+		%title Bolt
+		= stylesheet_link_tag    "application", :media => "all"
+		= javascript_include_tag "application"
+		= csrf_meta_tags
+		%meta{:name=>"viewport", :content=>"width=device-width, initial-scale=1.0"}
+
+	%body
+		%div{:class=>"navbar navbar-fixed-top"}
+			%div.navbar-inner
+				%div.container-fluid
+					%a{:class=>"btn btn-navbar", :"data-toggle"=>'collapse', :"data-target" => ".nav-collapse"}
+						%span.icon-bar
+						%span.icon-bar
+						%span.icon-bar
+					= link_to 'Bolt', root_path, :class=>"brand"
+
+					%div{:class=>"nav-collapse"}
+						%ul.nav
+							%li= link_to 'Home', timeline_path
+							%li= link_to 'Mentions', mentions_path
+							%li= link_to 'Global', global_path
+							%li{:class=>"divider-vertical"}
+
+						= form_for Status.new, :url => put_search_path, :method => :put ,:html => {:class=>"navbar-search"} do |f|
+							= f.text_field :text, :class=>"search-query span4", :placeholder=>"Search"
+						
+						%ul{:class=>"nav pull-right"}
+							%li{:class=>"divider-vertical"}
+
+							- if user_signed_in?
+								%li= link_to "Settings",settings_path
+								%li{:class=>"divider-vertical"}
+								%li= link_to "@#{current_user.screen_name}",user_profile_path(current_user.screen_name)
+								%li{:class=>"divider-vertical"}
+								%li= link_to 'Logout', destroy_user_session_path, :method => :delete
+							- else
+								%li= link_to 'Log in', new_user_session_path
+							%li{:class=>"divider-vertical"}
+							%li= link_to 'About', about_path
+	
+
+		.container-fluid
+			.row-fluid
+				.span4
+					- if notice	
+						%div{:class=>"alert alert-info"}
+							= link_to '×', '#', :class=>"close", :'data-dismiss'=>"alert"
+							= notice
+					- if alert
+						%div{:class=>"alert alert-error"}
+							= link_to '×', '#', :class=>"close", :'data-dismiss'=>"alert"
+							= alert
+					- if user_signed_in?
+
+						.well{:style=>"height:120px"}
+							= form_for Status.new do |f|
+								.field
+									= f.text_area :text, :style=>"height:70px;width:97%;resize:none", :placeholder=>'New status...', :value => "#{@reply_box_content if @user}", :onkeyup => "countChar(this)"
+									= f.hidden_field :reply_id, :value => params[:id] if "#{controller_name}##{action_name}" == 'operations#show'
+								.actions{:style=>"text-align:right"}
+									= f.submit 'Send!', :class=>"btn btn-primary btn-large"
+									%div.counter= 256
+					.visible-desktop
+						%div{:class=>"alert alert-success"}
+							
+							
+							%p{:style=>"text-align:center;margin:0"}="Alpha version. Private Alpha!"
+				.span8
+					= yield
+			.visible-phone
+				%h5 It's advised to use landscape mode on smartphones!

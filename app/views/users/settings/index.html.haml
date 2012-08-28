@@ -1,0 +1,39 @@
+%h2 Edit your account settings
+= form_for @user, :url => update_settings_path, :html => {:class => 'well'} do |f|
+
+	= devise_error_messages!
+	%div.control-group
+		= f.label :name
+		.controls
+			= f.text_field :name, :class=>"span5", :placeholder => 'Name'
+			%p.help-block= "You can change your name here"
+	%div.control-group
+		= f.label :screen_name
+		.controls
+			.input-prepend
+				%span(class="add-on")>
+					@
+				= f.text_field :screen_name, :placeholder => 'Screen Name'
+		%p.help-block= "You can change your screen name (nickname) here"
+	%div.control-group
+		= f.label :email
+		.controls
+			= f.email_field :email, :class=>"span5", :placeholder => 'E-mail'
+			%p.help-block= "You can change your e-mail address here"
+	%div.control-group
+		= f.label :password
+		.controls
+			= f.password_field :password, :class=>"span5", :placeholder => 'Password'
+			%p.help-block= "You can change your password here"
+	%div.control-group
+		= f.label :biography
+		.controls
+			= f.text_area :biography, :class=>"span5", :style => 'height:50px', :placeholder => 'Biography'
+			%p.help-block= "You can change your biography here"
+	%div.control-group
+		= f.label :old_password
+		.controls
+			= f.password_field :old_password, :class=>"span5", :placeholder => 'Old password (for confirmation)'
+			%p.help-block= "You need to provide the old password to authorize any changes"
+	%br/
+	%div= f.submit "Update", :class => 'btn btn-large btn-primary'

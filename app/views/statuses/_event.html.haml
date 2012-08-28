@@ -1,0 +1,20 @@
+%div{:class=>"well"}
+	- case event.type
+		- when :follow
+			%h5
+				= link_to "#{event.users.first.name}", user_profile_path(event.users.first.screen_name)
+				followed 
+				= link_to "#{event.users.last.name}", user_profile_path(event.users.last.screen_name)
+			
+		- when :new_nick
+			%h5
+				= link_to "#{event.users.first.name}", user_profile_path(event.users.first.screen_name)
+				is now called 
+				= link_to "@#{event.users.first.screen_name}", user_profile_path(event.users.first.screen_name)
+		- when :new_user
+			%h5
+				= link_to "#{event.users.first.name}", user_profile_path(event.users.first.screen_name)
+				joined Bolt!
+		%span.label= "#{time_ago_in_words(event.created_at)} ago"
+
+	

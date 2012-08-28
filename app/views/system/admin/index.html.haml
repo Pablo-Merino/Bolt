@@ -1,0 +1,6 @@
+%h1 Admin panel
+.separator
+%h3 Invite URL
+= link_to "http://#{request.host_with_port}#{new_user_registration_path}?code=#{@i}"
+= form_for Invite.new, :url => update_invite_code_path, :method => :put do |f|
+	= f.submit 'Create new invite code', :class => 'btn btn-primary btn-large'

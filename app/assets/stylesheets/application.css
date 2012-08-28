@@ -1,0 +1,174 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+
+* {
+	-webkit-font-smoothing:antialiased;
+	font-smooth:always;
+}
+
+div.operations * {
+	display: inline;
+
+}
+
+div.user_operations * {
+	display: inline;
+	margin-top:10px;
+	margin-bottom:10px; 
+}
+
+
+div.sessions_box .text_field {
+	width:100%;
+}
+div.sessions_box .controls {
+	width:150px;
+	margin:0 auto;
+}
+div.field_with_errors {
+	margin:0;
+	padding:0;
+	display: inline;
+}
+p.about_text {
+	line-height: 25px;
+	font-size: 20px;
+}
+
+div.counter {
+	float:left;
+	font-size: 30px;
+	margin-top:10px;
+
+}
+.well.own_status {
+	background-color: rgba(0, 128, 255, 0.2) !important;
+}
+.user_avatar {
+	float:left;
+
+	height:120px;
+	width:120px;
+	margin-right:20px;
+	margin-bottom: 20px;
+	border:1px solid black;
+}
+div.operations input {
+	margin-top:0px;
+}
+div.operations a {
+	padding-top:3px;
+	padding-bottom:3px;
+}
+div.operations {
+	margin-top: 10px;
+	margin-bottom:-15px;
+}
+.reply {
+	display: none;
+}
+
+.well .status_content {
+	margin-left:140px;
+	min-height:120px;
+
+}
+.status_user_avatar {
+	
+	float:left;
+	margin-right:20px;
+	margin-bottom: 10px;
+	border:1px solid black;
+	height: 105px;
+	width: 105px;
+	
+}
+
+.well .status_reply_content div.operations {
+	margin-bottom:0 !important;
+}
+
+.well .status_reply_content {
+	margin-left:60px;
+	min-height:80px;
+}
+.status_reply_user_avatar {	
+	float:left;
+	margin-right:20px;
+	margin-bottom: 20px;
+	border:1px solid black;
+	height: 50px;
+	width: 50px;
+}
+.inline * {
+	display: inline;
+}
+
+.count h1 {
+	width:60px;
+	text-align: center;
+}
+
+.to_the_left {
+	float: left;
+	margin-right:10px;
+	border-right: 1px solid black;
+	padding-right: 10px;
+}
+.separator {
+	margin:10px;
+}
+
+div.btn {
+	cursor: default;
+}
+
+.mini_avatar {	
+	float:left;
+	margin-right:20px;
+	margin-bottom: 20px;
+	border:1px solid black;
+	height: 40px;
+	width: 40px;
+}
+
+.left {
+	float:left;
+	width:120px;
+}
+.left_reply {
+	float: left;
+	width:52px;
+}
+span.add-on {
+	margin-top:-10px;
+}
+
+@media (max-width: 480px) { 
+
+	.user_avatar {
+		height:120px;
+		width:120px;
+		margin-right:20px;
+		border:1px solid black;
+	}
+
+	.nav-tabs li a {
+		font-size:12px;
+	}
+}
+
+.spacer {
+	margin-left: 10px;
+}

@@ -1,0 +1,2 @@
+module Statuses::SearchHelper
+end
