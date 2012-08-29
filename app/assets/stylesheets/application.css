@@ -76,7 +76,8 @@ div.operations {
 	margin-bottom:-15px;
 }
 .reply {
-	display: none;
+	margin-top:20px;
+	
 }
 
 .well .status_content {
@@ -100,6 +101,7 @@ div.operations {
 }
 
 .well .status_reply_content {
+
 	margin-left:60px;
 	min-height:80px;
 }
@@ -167,8 +169,4 @@ span.add-on {
 	.nav-tabs li a {
 		font-size:12px;
 	}
-}
-
-.spacer {
-	margin-left: 10px;
 }

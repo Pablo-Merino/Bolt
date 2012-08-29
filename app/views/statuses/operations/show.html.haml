@@ -1,4 +1,10 @@
 - if @status
 	= render :partial => 'statuses/status', :locals => {:status => @status}
+	- unless @status.reply.nil?
+
+		%div{:class=>"reply #{@status.id}", :"data-status_id"=>@status.id}
+			
+			%h4 In reply to:
+			= render :partial => 'statuses/status', :locals => {:status => @status.reply}
 - else
 	%h1{:style=>'text-align:center'} Status not found

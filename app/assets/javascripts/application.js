@@ -39,17 +39,7 @@ function countChar(val){
 $(document).ready(function() {
 	countChar(document.getElementById('status_text'));
 
-	$('.show_reply_btn').on('click', function() {
-		var id = $(this).data('status_id');
-		
-		if($(this).html() == '<i class="icon-minus"></i>') {
-			$(this).html('<i class="icon-plus"></i>');	
-		} else {
-			$(this).html('<i class="icon-minus"></i>');
-		}
 
-		$('.'+id).slideToggle();
-	});
 
 	$('.follower_button').on('click', function() {
 		$('.followers_tab_menu').addClass('active');
