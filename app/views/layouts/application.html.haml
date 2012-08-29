@@ -58,16 +58,17 @@
 						.well{:style=>"height:120px"}
 							= form_for Status.new do |f|
 								.field
-									= f.text_area :text, :style=>"height:70px;width:97%;resize:none", :placeholder=>'New status...', :value => "#{@reply_box_content if @user}", :onkeyup => "countChar(this)"
+									= f.text_area :text, :style=>"height:70px;width:97%;resize:none", :placeholder=>'New status...', :value => "#{@reply_box_content}", :onkeyup => "countChar(this)"
 									= f.hidden_field :reply_id, :value => params[:id] if "#{controller_name}##{action_name}" == 'operations#show'
 								.actions{:style=>"text-align:right"}
 									= f.submit 'Send!', :class=>"btn btn-primary btn-large"
 									%div.counter= 256
 					.visible-desktop
 						%div{:class=>"alert alert-success"}
-							
-							
 							%p{:style=>"text-align:center;margin:0"}="Alpha version."
+							- if Rails.env.development?
+								%pre="#{controller_name}##{action_name}"
+							
 				.span8
 					= yield
 			.visible-phone
