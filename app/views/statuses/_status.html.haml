@@ -3,8 +3,9 @@
 		= image_tag avatar_url(status.user.email), :class=>'status_user_avatar'
 
 	.status_content
-		%h4{:style=>'display:inline'}= link_to "#{status.user.name}", user_profile_path(status.user.screen_name)
-		%small="@#{status.user.screen_name}"
+		%h4{:style=>'display:inline'}
+			= link_to "#{status.user.name}", user_profile_path(status.user.screen_name)
+			%small="@#{status.user.screen_name}"
 		%p= status.html.html_safe
 		%span.label= "#{time_ago_in_words(status.created_at)} ago"
 
