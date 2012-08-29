@@ -10,10 +10,7 @@
 	%div.control-group
 		= f.label :screen_name
 		.controls
-			.input-prepend
-				%span(class="add-on")>
-					@
-				= f.text_field :screen_name, :placeholder => 'Screen Name'
+			= f.text_field :screen_name, :placeholder => 'Screen Name'
 		%p.help-block= "You can change your screen name (nickname) here"
 	%div.control-group
 		= f.label :email
