@@ -13,16 +13,16 @@
 		%div.operations
 			- if current_user.faved? status
 				= form_for status, :url => unfavorite_status_path(status), :method => :delete do |f|
-					= f.button 'Unfavorite', :confirm => "Are you sure you want to unfavorite this status?", :class=>"btn btn-danger btn-mini"
+					= f.button 'Unfavorite', :confirm => "Are you sure you want to unfavorite this status?", :class=>"btn btn-danger btn-mini action_btn"
 			- else
 				= form_for status, :url => favorite_status_path(status), :method => :put do |f|
-					= f.button 'Favorite', :class=>"btn btn-success btn-mini"
+					= f.button 'Favorite', :class=>"btn btn-success btn-mini action_btn"
 
-			= link_to 'View Status', show_status_path(status), :class=>"btn btn-success btn-mini" unless "#{controller_name}##{action_name}" == 'operations#show'
+			= link_to 'View Status', show_status_path(status), :class=>"btn btn-success btn-mini action_btn" unless "#{controller_name}##{action_name}" == 'operations#show'
 
 			- if status.is_mine? current_user
 				= form_for status, :url => destroy_status_path(status), :method => :delete do |f|
-					= f.button 'Destroy', :confirm => "Are you sure you want to destroy this status?", :class=>"btn btn-danger btn-mini"
+					= f.button 'Destroy', :confirm => "Are you sure you want to destroy this status?", :class=>"btn btn-danger btn-mini action_btn"
 
 
 		

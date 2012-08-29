@@ -170,3 +170,7 @@ span.add-on {
 		font-size:12px;
 	}
 }
+.action_btn {
+	height:22px;
+	margin-right:5px;
+}
